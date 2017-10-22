@@ -3,16 +3,15 @@ machine:
     - curl -sSL https://s3.amazonaws.com/circle-downloads/install-circleci-docker.sh | bash -s -- 1.10.0
   services:
     - docker
-#
-#dependencies:
-#  pre:
-#    - sudo pip install docker-compose
+
+dependencies:
+  pre:
+    - sudo pip install docker-compose
 
 test:
   override:
-    - sudo pip uninstall docker-py; sudo pip uninstall docker; sudo pip install docker
-    - docker-compose up -d
-    - docker-compose run dockerapp python test.py
+    - sudo docker-compose up -d
+    - sudo docker-compose run dockerapp python test.py
 
 deployment:
   hub:
