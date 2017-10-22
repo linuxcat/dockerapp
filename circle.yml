@@ -10,7 +10,7 @@ machine:
 
 test:
   override:
-    - sudo pip install docker-compose
+    - sudo pip uninstall docker-py; sudo pip uninstall docker; sudo pip install docker
     - docker-compose up -d
     - docker-compose run dockerapp python test.py
 
