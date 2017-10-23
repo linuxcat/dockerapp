@@ -1,0 +1,38 @@
+version: 2
+jobs:
+  test:
+    docker:
+      - image: circleci/python:3.5
+    steps:
+      - checkout
+      - run:
+          name: Install Docker Compose
+          command: |
+          set -x
+          curl -L https://github.com/docker/compose/releases/download/1.11.2/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose
+          chmod +x /usr/local/bin/docker-compose
+#      - run:
+#          name: Run Rspec Tests
+#          command: bundle exec rspec
+      - run:
+          name: Run Docker Compose
+          command: docker-compose up -d
+      - run:
+          name: Run Application Tests
+          command: docker-compose run dockerapp python test.py
+workflows:
+  version: 2
+  test:
+    jobs:
+      - test
+
+#  deploy:
+#  hub:
+#    branch: /.*/
+#    commands:
+#      - docker login -e $DOCKER_HUB_EMAIL -u $DOCKER_HUB_USER_ID -p $DOCKER_HUB_PWD
+#      - docker tag dockerapp_dockerapp $DOCKER_HUB_USER_ID/dockerapp:$CIRCLE_SHA1
+#      - docker tag dockerapp_dockerapp $DOCKER_HUB_USER_ID/dockerapp:latest
+#      - docker push $DOCKER_HUB_USER_ID/dockerapp:$CIRCLE_SHA1
+#      - docker push $DOCKER_HUB_USER_ID/dockerapp:latest
+
