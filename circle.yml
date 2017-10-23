@@ -1,7 +1,6 @@
 version: 2
 jobs:
   test:
-    working_directory: .
     docker:
       - image: circleci/ruby:2.2
     steps:
@@ -9,8 +8,6 @@ jobs:
       - run:
           name: Install docker-compose
           command: pip install docker-compose
-    steps:
-      - checkout
       - run:
           name: Run Rspec Tests
           command: bundle exec rspec
