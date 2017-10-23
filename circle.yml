@@ -8,28 +8,34 @@ jobs:
     - run:
         name: Install docker-compose
         command: pip install docker-compose
+  test:
+    steps:
+      - checkout
+      - run:
+          name: Run Rspec Tests
+          command: bundle exec rspec
+      - run:
+          name: Run Docker Compose
+          command: docker-compose up -d
+      - run:
+          name: Run Application Tests
+          command: docker-compose run dockerapp python test.py
 
-
-test:
-  steps:
-    - checkout
-    - run:
-        name: Run Rspec Tests
-        command: bundle exec rspec
-    - run:
-        name: Run Docker Compose
-        command: docker-compose up -d
-    - run:
-        name: Run Application Tests
-        command: docker-compose run dockerapp python test.py
-
-deployment:
-  hub:
-    branch: /.*/
-    commands:
-      - docker login -e $DOCKER_HUB_EMAIL -u $DOCKER_HUB_USER_ID -p $DOCKER_HUB_PWD
-      - docker tag dockerapp_dockerapp $DOCKER_HUB_USER_ID/dockerapp:$CIRCLE_SHA1
-      - docker tag dockerapp_dockerapp $DOCKER_HUB_USER_ID/dockerapp:latest
-      - docker push $DOCKER_HUB_USER_ID/dockerapp:$CIRCLE_SHA1
-      - docker push $DOCKER_HUB_USER_ID/dockerapp:latest
+workflows:
+  version: 2
+  build_and_test:
+    jobs:
+      - build
+      - test:
+          requires:
+            - build
+#  deploy:
+#  hub:
+#    branch: /.*/
+#    commands:
+#      - docker login -e $DOCKER_HUB_EMAIL -u $DOCKER_HUB_USER_ID -p $DOCKER_HUB_PWD
+#      - docker tag dockerapp_dockerapp $DOCKER_HUB_USER_ID/dockerapp:$CIRCLE_SHA1
+#      - docker tag dockerapp_dockerapp $DOCKER_HUB_USER_ID/dockerapp:latest
+#      - docker push $DOCKER_HUB_USER_ID/dockerapp:$CIRCLE_SHA1
+#      - docker push $DOCKER_HUB_USER_ID/dockerapp:latest
 
