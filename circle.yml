@@ -3,13 +3,16 @@ jobs:
   build:
     docker:
       image: circleci/classic:201708-01
-
-test:
-  steps:
+    steps:
     - checkout
     - run:
         name: Install docker-compose
         command: pip install docker-compose
+
+
+test:
+  steps:
+    - checkout
     - run:
         name: Run Rspec Tests
         command: bundle exec rspec
