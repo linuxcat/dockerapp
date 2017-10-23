@@ -9,11 +9,12 @@ machine:
 dependencies:
   pre:
     - pip install docker-compose
+    - bundle install
 
 test:
-  pre:
-    - bundle exec rspec
   override:
+    - rake spec
+  post:
     - docker-compose up -d
     - docker-compose run dockerapp python test.py
 
