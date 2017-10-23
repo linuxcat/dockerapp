@@ -3,16 +3,17 @@ machine:
     - curl -sSL https://s3.amazonaws.com/circle-downloads/install-circleci-docker.sh | bash -s -- 1.10.0
   services:
     - docker
-#  ruby:
-#    version: 2.2.0
+  ruby:
+    version: 2.2.0
 
 dependencies:
   pre:
     - pip install docker-compose
 
 test:
+  pre:
+    - bundle exec rspec
   override:
-#    - bundle exec rspec
     - docker-compose up -d
     - docker-compose run dockerapp python test.py
 
