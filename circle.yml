@@ -1,7 +1,5 @@
 version: 2
 jobs:
-  build:
-    working_directory: .
   test:
     working_directory: .
     docker:
@@ -24,12 +22,10 @@ jobs:
           command: docker-compose run dockerapp python test.py
 workflows:
   version: 2
-  build_and_test:
+  test:
     jobs:
-      - build
-      - test:
-          requires:
-            - build
+      - test
+
 #  deploy:
 #  hub:
 #    branch: /.*/
