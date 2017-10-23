@@ -1,5 +1,4 @@
 require 'dockerspec/serverspec'
-require 'redis'
 
 
 describe docker_compose('docker-compose.yml', wait: 20, rm: true) do
