@@ -1,6 +1,6 @@
 require 'dockerspec/serverspec'
 
-describe docker_compose('docker-compose.yml', :wait => 10) do
+describe docker_compose('docker-compose.yml', :wait => 60) do
 
   its_container('redis') do
     describe port(6379) do
