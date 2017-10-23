@@ -13,10 +13,10 @@ jobs:
 #          command: bundle exec rspec
       - run:
           name: Run Docker Compose
-          command: docker-compose up -d
+          command: sudo docker-compose up -d
       - run:
           name: Run Application Tests
-          command: docker-compose run dockerapp python test.py
+          command: sudo docker-compose run dockerapp python test.py
 workflows:
   version: 2
   test:
