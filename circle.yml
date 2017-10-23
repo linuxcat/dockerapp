@@ -1,13 +1,14 @@
 version: 2
 jobs:
   build:
+    working_directory: .
     docker:
-      image: circleci/classic:201708-01
+      - image: circleci/classic:201708-01
     steps:
-    - checkout
-    - run:
-        name: Install docker-compose
-        command: pip install docker-compose
+      - checkout
+      - run:
+          name: Install docker-compose
+          command: pip install docker-compose
   test:
     steps:
       - checkout
@@ -20,7 +21,6 @@ jobs:
       - run:
           name: Run Application Tests
           command: docker-compose run dockerapp python test.py
-
 workflows:
   version: 2
   build_and_test:
