@@ -22,7 +22,7 @@ namespace :spec do
     RSpec::Core::RakeTask.new(target.to_sym) do |t|
       ENV['TARGET_HOST'] = original_target
       t.pattern = "spec/#{original_target}/*_spec.rb"
-      t.rspec_opts ='--format RspecHtmlFormatter --format documentation --format html --out standard_report.html'
+      t.rspec_opts ='--format RspecHtmlFormatter --format documentation --format html --out reports/standard_report.html'
     end
   end
 end
