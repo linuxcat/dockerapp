@@ -1,16 +1,16 @@
-require 'dockerspec/serverspec'
+require  "dockerspec/serverspec"
 
-describe docker_compose('docker-compose.yml') do
+describe docker_compose("docker-compose.yml") do
 
-  its_container('redis') do
+  its_container(:redis) do
     describe port(6379) do
-      it { should be_listening('tcp') }
+      it { should be_listening("tcp") }
     end
   end
 
-  its_container('dockerapp') do
-    describe package('Flask') do
-      it { should be_installed.by('pip').with_version('0.11.1') }
+  its_container(:dockerapp) do
+    describe package("Flask") do
+      it { should be_installed.by("pip").with_version("0.11.1") }
     end
   end
 
