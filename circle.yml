@@ -1,20 +1,25 @@
-machine:
-#  pre:
-#    - curl -sSL https://s3.amazonaws.com/circle-downloads/install-circleci-docker.sh | bash -s -- 1.10.0
-  services:
-    - docker
+version: 2
+jobs:
+  docker:
+    image: circleci/classic:201708-01
   ruby:
     version: 2.2.2
 
-dependencies:
-  pre:
-    - pip install docker-compose
 test:
-  override:
-    - bundle exec rspec
-  post:
-    - docker-compose up -d
-    - docker-compose run dockerapp python test.py
+  steps:
+    - checkout
+    - run:
+        name: Install docker-compose
+        command: pip install docker-compose
+    - run:
+        name: Run Rspec Tests
+        command: bundle exec rspec
+    - run:
+        name: Run Docker Compose
+        command: docker-compose up -d
+    - run:
+        name: Run Application Tests
+        command: docker-compose run dockerapp python test.py
 
 deployment:
   hub:
