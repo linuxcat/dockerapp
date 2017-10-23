@@ -8,9 +8,9 @@ jobs:
       - run:
           name: Install docker-compose
           command: sudo pip install docker-compose
-      - run:
-          name: Run Rspec Tests
-          command: bundle exec rspec
+#      - run:
+#          name: Run Rspec Tests
+#          command: bundle exec rspec
       - run:
           name: Run Docker Compose
           command: docker-compose up -d
